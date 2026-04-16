@@ -143,6 +143,24 @@ export const mentorApi = {
   }
 }
 
+// 打卡相关 API
+export const checkinApi = {
+  // 获取今日打卡状态
+  getStatus() {
+    return request('/checkin')
+  },
+
+  // 提交打卡
+  submit(data) {
+    return request('/checkin', 'POST', data)
+  },
+
+  // 获取打卡统计
+  getStats() {
+    return request('/checkin/stats')
+  }
+}
+
 // 积分相关 API（待后端实现）
 export const pointsApi = {
   // 获取积分余额
@@ -180,6 +198,7 @@ export default {
   testApi,
   matchApi,
   mentorApi,
+  checkinApi,
   pointsApi,
   paymentApi
 }

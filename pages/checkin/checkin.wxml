@@ -1,0 +1,108 @@
+<!--pages/checkin/checkin.wxml-->
+<view class="container">
+  <!-- 头部统计 -->
+  <view class="header">
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalCheckIns || 0}}</text>
+      <text class="stat-label">累计打卡</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.currentStreak || 0}}</text>
+      <text class="stat-label">连续天数</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.points || 0}}</text>
+      <text class="stat-label">我的积分</text>
+    </view>
+  </view>
+
+  <!-- 本周打卡日历 -->
+  <view class="calendar-section">
+    <text class="section-title">本周打卡</text>
+    <view class="week-calendar">
+      <view class="day-item" wx:for="{{weekStatus}}" wx:key="index">
+        <view class="day-circle {{item ? 'checked' : ''}}">
+          <text wx:if="{{item}}">✓</text>
+        </view>
+        <text class="day-name">周{{['日','一','二','三','四','五','六'][index]}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日打卡区域 -->
+  <view class="checkin-section" wx:if="{{!todayCheckedIn}}">
+    <text class="section-title">今日打卡</text>
+    
+    <!-- 学习时长 -->
+    <view class="form-item">
+      <text class="label">学习时长</text>
+      <slider min="0" max="180" step="10" value="{{studyTime}}" show-value bindchange="onStudyTimeChange"/>
+      <text class="hint">{{studyTime}} 分钟</text>
+    </view>
+
+    <!-- 心情选择 -->
+    <view class="form-item">
+      <text class="label">今日心情</text>
+      <view class="mood-selector">
+        <view class="mood-item {{mood === 'happy' ? 'selected' : ''}}" data-mood="happy" bindtap="selectMood">
+          <text class="mood-emoji">😊</text>
+          <text class="mood-text">开心</text>
+        </view>
+        <view class="mood-item {{mood === 'normal' ? 'selected' : ''}}" data-mood="normal" bindtap="selectMood">
+          <text class="mood-emoji">😐</text>
+          <text class="mood-text">一般</text>
+        </view>
+        <view class="mood-item {{mood === 'tired' ? 'selected' : ''}}" data-mood="tired" bindtap="selectMood">
+          <text class="mood-emoji">😴</text>
+          <text class="mood-text">疲惫</text>
+        </view>
+        <view class="mood-item {{mood === 'excited' ? 'selected' : ''}}" data-mood="excited" bindtap="selectMood">
+          <text class="mood-emoji">🤩</text>
+          <text class="mood-text">兴奋</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 学习笔记 -->
+    <view class="form-item">
+      <text class="label">学习笔记（选填）</text>
+      <textarea class="notes-input" placeholder="记录今天的学习内容或心得..." value="{{notes}}" bindinput="onNotesInput" maxlength="200"/>
+      <text class="hint">{{notes.length}}/200</text>
+    </view>
+
+    <!-- 打卡按钮 -->
+    <button class="checkin-btn" bindtap="submitCheckin">立即打卡</button>
+  </view>
+
+  <!-- 已打卡状态 -->
+  <view class="checked-section" wx:if="{{todayCheckedIn}}">
+    <view class="success-icon">✓</view>
+    <text class="success-text">今日已打卡</text>
+    <text class="success-sub">明天再来继续加油！</text>
+  </view>
+
+  <!-- 打卡规则 -->
+  <view class="rules-section">
+    <text class="section-title">打卡规则</text>
+    <view class="rule-item">
+      <text class="rule-dot">•</text>
+      <text class="rule-text">每日打卡 +10 积分</text>
+    </view>
+    <view class="rule-item">
+      <text class="rule-dot">•</text>
+      <text class="rule-text">连续3天 +20 积分</text>
+    </view>
+    <view class="rule-item">
+      <text class="rule-dot">•</text>
+      <text class="rule-text">连续7天 +50 积分</text>
+    </view>
+    <view class="rule-item">
+      <text class="rule-dot">•</text>
+      <text class="rule-text">学习30分钟 +10 积分</text>
+    </view>
+    <view class="rule-item">
+      <text class="rule-dot">•</text>
+      <text class="rule-text">学习60分钟 +20 积分</text>
+    </view>
+  </view>
+</view>

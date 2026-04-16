@@ -66,6 +66,17 @@ Page({
     })
   },
 
+  // 跳转到打卡页
+  goToCheckin() {
+    if (!getApp().isLoggedIn()) {
+      this.goToLogin()
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/checkin/checkin'
+    })
+  },
+
   // 跳转到测试页
   goToTest() {
     if (!getApp().isLoggedIn()) {

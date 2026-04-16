@@ -7,7 +7,8 @@
     "pages/match/match",
     "pages/mentor/mentor",
     "pages/gift/gift",
-    "pages/points/points"
+    "pages/points/points",
+    "pages/checkin/checkin"
   ],
   "window": {
     "backgroundTextStyle": "light",
