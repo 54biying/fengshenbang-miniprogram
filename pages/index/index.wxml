@@ -1,0 +1,73 @@
+<!-- 首页 -->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="card" wx:if="{{userInfo}}">
+    <view class="flex-between">
+      <view class="flex">
+        <image class="avatar" src="{{userInfo.avatar || '/images/default-avatar.png'}}" />
+        <view class="ml-20">
+          <view class="name">{{userInfo.name || '用户'}}</view>
+          <view class="level-badge">Lv.{{userLevel}}</view>
+        </view>
+      </view>
+      <view class="points-box">
+        <text class="points-num">{{userPoints}}</text>
+        <text class="points-label">积分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 未登录提示 -->
+  <view class="card" wx:if="{{!userInfo}}">
+    <view class="flex-center">
+      <text>请先登录</text>
+      <button class="btn btn-primary ml-20" bindtap="goToLogin">立即登录</button>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="card">
+    <view class="feature-item" bindtap="goToTest">
+      <image class="feature-icon" src="/images/test-icon.png" />
+      <view class="feature-info">
+        <text class="feature-title">AI能力测试</text>
+        <text class="feature-desc">测测你的真实水平</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+
+    <view class="feature-item" bindtap="goToMatch">
+      <image class="feature-icon" src="/images/match-icon.png" />
+      <view class="feature-info">
+        <text class="feature-title">学习伙伴匹配</text>
+        <text class="feature-desc">找到同水平的学习伙伴</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+
+    <view class="feature-item" bindtap="goToMentor">
+      <image class="feature-icon" src="/images/mentor-icon.png" />
+      <view class="feature-info">
+        <text class="feature-title">拜师学艺</text>
+        <text class="feature-desc">向高手请教问题</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="card" wx:if="{{userInfo}}">
+    <view class="stat-item">
+      <text class="stat-num">{{stats.testCount || 0}}</text>
+      <text class="stat-label">测试次数</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.matchCount || 0}}</text>
+      <text class="stat-label">匹配次数</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.giftCount || 0}}</text>
+      <text class="stat-label">拜师次数</text>
+    </view>
+  </view>
+</view>

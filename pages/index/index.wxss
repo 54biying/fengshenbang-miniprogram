@@ -1,0 +1,97 @@
+/* 首页样式 */
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.level-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  display: inline-block;
+}
+
+.points-box {
+  text-align: right;
+}
+
+.points-num {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1890ff;
+  display: block;
+}
+
+.points-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.feature-item:last-child {
+  border-bottom: none;
+}
+
+.feature-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 16rpx;
+  background: #e6f7ff;
+}
+
+.feature-info {
+  flex: 1;
+  margin-left: 24rpx;
+}
+
+.feature-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.feature-desc {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: #999;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-num {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1890ff;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}

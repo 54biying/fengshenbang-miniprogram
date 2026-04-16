@@ -1,0 +1,89 @@
+<!-- 拜师礼页 -->
+<view class="container">
+  <!-- 发送拜师礼 -->
+  <view class="section" wx:if="{{type === 'send' && mentor}}">
+    <view class="mentor-card">
+      <image class="mentor-avatar" src="{{mentor.avatar || '/images/default-avatar.png'}}" />
+      <text class="mentor-name">{{mentor.name}}</text>
+      <text class="mentor-title">{{mentor.title}}</text>
+    </view>
+
+    <view class="gift-form">
+      <view class="form-group">
+        <text class="label">拜师礼金额</text>
+        <view class="amount-options">
+          <view 
+            class="amount-item {{selectedAmount === item ? 'selected' : ''}}"
+            wx:for="{{amountOptions}}"
+            wx:key="*this"
+            bindtap="selectAmount"
+            data-amount="{{item}}"
+          >
+            <text class="amount-text">¥{{item}}</text>
+          </view>
+        </view>
+        <input 
+          class="custom-amount" 
+          type="digit" 
+          placeholder="或输入自定义金额" 
+          bindinput="onCustomAmountInput"
+        />
+      </view>
+
+      <view class="form-group">
+        <text class="label">留言</text>
+        <textarea 
+          class="message-input" 
+          placeholder="请输入你的问题和需求..." 
+          maxlength="200"
+          bindinput="onMessageInput"
+        />
+        <text class="char-count">{{message.length}}/200</text>
+      </view>
+
+      <button class="btn btn-primary submit-btn" bindtap="submitGift">发送拜师礼</button>
+    </view>
+  </view>
+
+  <!-- 我的拜师礼 -->
+  <view class="section" wx:if="{{type === 'my'}}">
+    <text class="section-title">我的拜师礼</text>
+    <view class="gift-list" wx:if="{{myGifts.length > 0}}">
+      <view class="gift-item" wx:for="{{myGifts}}" wx:key="id">
+        <view class="gift-info">
+          <text class="gift-mentor">{{item.mentor.name}}</text>
+          <text class="gift-amount">¥{{item.amount}}</text>
+          <text class="gift-message">{{item.message}}</text>
+          <text class="gift-status {{item.status}}">{{item.statusText}}</text>
+        </view>
+        <text class="gift-time">{{item.time}}</text>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-text">暂无拜师礼记录</text>
+    </view>
+  </view>
+
+  <!-- 收到的拜师礼 -->
+  <view class="section" wx:if="{{type === 'received'}}">
+    <text class="section-title">收到的拜师礼</text>
+    <view class="gift-list" wx:if="{{receivedGifts.length > 0}}">
+      <view class="gift-item" wx:for="{{receivedGifts}}" wx:key="id">
+        <view class="gift-info">
+          <text class="gift-mentor">{{item.fromUser.name}}</text>
+          <text class="gift-amount">¥{{item.amount}}</text>
+          <text class="gift-message">{{item.message}}</text>
+          <text class="gift-status {{item.status}}">{{item.statusText}}</text>
+        </view>
+        <view class="gift-actions" wx:if="{{item.status === 'pending'}}">
+          <button class="btn btn-secondary mini-btn" bindtap="rejectGift" data-id="{{item.id}}">拒绝</button>
+          <button class="btn btn-primary mini-btn" bindtap="acceptGift" data-id="{{item.id}}">接受</button>
+        </view>
+        <text class="gift-time" wx:else>{{item.time}}</text>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-text">暂无收到拜师礼</text>
+    </view>
+  </view>
+</view>

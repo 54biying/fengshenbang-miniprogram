@@ -1,0 +1,52 @@
+<!-- 匹配页 -->
+<view class="container">
+  <!-- 推荐匹配 -->
+  <view class="section">
+    <text class="section-title">推荐匹配</text>
+    <view class="match-list" wx:if="{{recommendations.length > 0}}">
+      <view 
+        class="match-item" 
+        wx:for="{{recommendations}}" 
+        wx:key="id"
+        bindtap="viewUserProfile"
+        data-user="{{item}}"
+      >
+        <image class="user-avatar" src="{{item.avatar || '/images/default-avatar.png'}}" />
+        <view class="user-info">
+          <view class="flex-between">
+            <text class="user-name">{{item.name}}</text>
+            <text class="user-level">Lv.{{item.level}}</text>
+          </view>
+          <text class="user-tags">{{item.tags}}</text>
+          <text class="match-degree">匹配度：{{item.matchDegree}}%</text>
+        </view>
+        <button class="btn btn-primary small-btn" bindtap="sendRequest" data-userid="{{item.id}}">
+          请求
+        </button>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/empty.png" />
+      <text class="empty-text">暂无推荐，先去测试吧</text>
+      <button class="btn btn-primary" bindtap="goToTest">去测试</button>
+    </view>
+  </view>
+
+  <!-- 匹配请求 -->
+  <view class="section" wx:if="{{requests.length > 0}}">
+    <text class="section-title">匹配请求</text>
+    <view class="request-list">
+      <view class="request-item" wx:for="{{requests}}" wx:key="id">
+        <image class="request-avatar" src="{{item.fromUser.avatar || '/images/default-avatar.png'}}" />
+        <view class="request-info">
+          <text class="request-name">{{item.fromUser.name}}</text>
+          <text class="request-time">{{item.time}}</text>
+        </view>
+        <view class="request-actions">
+          <button class="btn btn-secondary mini-btn" bindtap="rejectRequest" data-id="{{item.id}}">拒绝</button>
+          <button class="btn btn-primary mini-btn" bindtap="acceptRequest" data-id="{{item.id}}">接受</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

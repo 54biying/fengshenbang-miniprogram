@@ -1,0 +1,57 @@
+<!-- 积分页 -->
+<view class="container">
+  <!-- 积分余额 -->
+  <view class="balance-section">
+    <text class="balance-label">当前积分</text>
+    <text class="balance-amount">{{balance}}</text>
+    <view class="balance-actions">
+      <button class="btn btn-primary small-btn" bindtap="earnPoints">赚取积分</button>
+      <button class="btn btn-secondary small-btn" bindtap="exchangePoints">兑换积分</button>
+    </view>
+  </view>
+
+  <!-- 积分明细 -->
+  <view class="history-section">
+    <text class="section-title">积分明细</text>
+    <view class="history-list" wx:if="{{history.length > 0}}">
+      <view class="history-item" wx:for="{{history}}" wx:key="id">
+        <view class="history-info">
+          <text class="history-desc">{{item.description}}</text>
+          <text class="history-time">{{item.time}}</text>
+        </view>
+        <text class="history-amount {{item.type}}">{{item.type === 'earn' ? '+' : '-'}}{{item.amount}}</text>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/empty.png" />
+      <text class="empty-text">暂无积分记录</text>
+    </view>
+  </view>
+
+  <!-- 积分规则 -->
+  <view class="rules-section">
+    <text class="section-title">积分规则</text>
+    <view class="rules-list">
+      <view class="rule-item">
+        <text class="rule-icon">📝</text>
+        <text class="rule-text">完成测试：+100积分</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-icon">🤝</text>
+        <text class="rule-text">成功匹配：+50积分</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-icon">🎁</text>
+        <text class="rule-text">发送拜师礼：+200积分</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-icon">💬</text>
+        <text class="rule-text">帮助他人：+50-100积分</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-icon">📚</text>
+        <text class="rule-text">每日签到：+10积分</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,145 @@
+/* 积分页样式 */
+.balance-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 60rpx 40rpx;
+  text-align: center;
+  color: white;
+  margin: 0 20rpx 32rpx;
+  border-radius: 16rpx;
+}
+
+.balance-label {
+  font-size: 28rpx;
+  opacity: 0.9;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.balance-amount {
+  font-size: 80rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 32rpx;
+}
+
+.balance-actions {
+  display: flex;
+  gap: 16rpx;
+  justify-content: center;
+}
+
+.small-btn {
+  width: 200rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 26rpx;
+  padding: 0;
+  border-radius: 8rpx;
+}
+
+.history-section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 24rpx;
+  padding: 0 20rpx;
+}
+
+.history-list {
+  padding: 0 20rpx;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.history-info {
+  flex: 1;
+}
+
+.history-desc {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.history-time {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}
+
+.history-amount {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-left: 16rpx;
+}
+
+.history-amount.earn {
+  color: #52c41a;
+}
+
+.history-amount.spend {
+  color: #f5222d;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+  background: white;
+  border-radius: 16rpx;
+  margin: 0 20rpx;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 32rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+}
+
+.rules-section {
+  padding: 0 20rpx;
+}
+
+.rules-list {
+  background: white;
+  padding: 32rpx;
+  border-radius: 16rpx;
+}
+
+.rule-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.rule-item:last-child {
+  margin-bottom: 0;
+}
+
+.rule-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.rule-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}

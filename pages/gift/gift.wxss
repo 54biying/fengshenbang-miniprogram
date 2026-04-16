@@ -1,0 +1,205 @@
+/* 拜师礼页样式 */
+.section {
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 24rpx;
+  padding: 0 20rpx;
+}
+
+.mentor-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 48rpx 40rpx;
+  text-align: center;
+  color: white;
+  margin: 0 20rpx 32rpx;
+  border-radius: 16rpx;
+}
+
+.mentor-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid white;
+  margin-bottom: 16rpx;
+}
+
+.mentor-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.mentor-title {
+  font-size: 28rpx;
+  opacity: 0.9;
+  display: block;
+}
+
+.gift-form {
+  padding: 0 20rpx;
+}
+
+.form-group {
+  margin-bottom: 40rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.amount-options {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.amount-item {
+  flex: 1;
+  background: white;
+  border: 2rpx solid #e8e8e8;
+  border-radius: 12rpx;
+  padding: 24rpx 0;
+  text-align: center;
+}
+
+.amount-item.selected {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.amount-text {
+  font-size: 32rpx;
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.custom-amount {
+  width: 100%;
+  height: 80rpx;
+  background: white;
+  border: 2rpx solid #e8e8e8;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.message-input {
+  width: 100%;
+  min-height: 200rpx;
+  background: white;
+  border: 2rpx solid #e8e8e8;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.char-count {
+  font-size: 24rpx;
+  color: #999;
+  text-align: right;
+  display: block;
+  margin-top: 8rpx;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 36rpx;
+  border-radius: 12rpx;
+}
+
+.gift-list {
+  padding: 0 20rpx;
+}
+
+.gift-item {
+  background: white;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.gift-info {
+  margin-bottom: 16rpx;
+}
+
+.gift-mentor {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.gift-amount {
+  font-size: 36rpx;
+  color: #f5222d;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.gift-message {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 12rpx;
+  line-height: 1.5;
+}
+
+.gift-status {
+  font-size: 24rpx;
+  display: inline-block;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.gift-status.pending {
+  background: #fff7e6;
+  color: #faad14;
+}
+
+.gift-status.accepted {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.gift-status.rejected {
+  background: #fff1f0;
+  color: #f5222d;
+}
+
+.gift-actions {
+  display: flex;
+  gap: 16rpx;
+  justify-content: flex-end;
+}
+
+.gift-time {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  text-align: right;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

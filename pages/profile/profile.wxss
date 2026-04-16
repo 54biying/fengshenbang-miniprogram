@@ -1,0 +1,107 @@
+/* 个人资料页样式 */
+.profile-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 60rpx 40rpx;
+  text-align: center;
+  color: white;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid white;
+  margin-bottom: 16rpx;
+}
+
+.name {
+  font-size: 36rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.level-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8rpx 24rpx;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+}
+
+.stats-section {
+  display: flex;
+  background: white;
+  padding: 40rpx 20rpx;
+  margin: -32rpx 20rpx 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1890ff;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}
+
+.menu-section {
+  background: white;
+  border-radius: 16rpx;
+  margin: 0 20rpx;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 32rpx 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon {
+  font-size: 36rpx;
+  margin-right: 24rpx;
+}
+
+.menu-title {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.arrow {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.logout-section {
+  padding: 40rpx 20rpx;
+}
+
+.logout-btn {
+  width: 100%;
+  height: 88rpx;
+  background: white;
+  color: #f5222d;
+  border: 2rpx solid #f5222d;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+}

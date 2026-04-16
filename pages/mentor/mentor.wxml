@@ -1,0 +1,37 @@
+<!-- 导师页 -->
+<view class="container">
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索导师" bindinput="onSearchInput" />
+  </view>
+
+  <view class="mentor-list">
+    <view 
+      class="mentor-item" 
+      wx:for="{{filteredMentors}}" 
+      wx:key="id"
+      bindtap="viewMentor"
+      data-mentor="{{item}}"
+    >
+      <image class="mentor-avatar" src="{{item.avatar || '/images/default-avatar.png'}}" />
+      <view class="mentor-info">
+        <view class="flex-between">
+          <text class="mentor-name">{{item.name}}</text>
+          <view class="rating">
+            <text class="star">★</text>
+            <text class="score">{{item.rating}}</text>
+          </view>
+        </view>
+        <text class="mentor-title">{{item.title}}</text>
+        <text class="mentor-exp">经验：{{item.experience}}</text>
+        <view class="mentor-tags">
+          <text class="tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+        </view>
+        <text class="mentor-price">¥{{item.price}}/次</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{filteredMentors.length === 0}}">
+    <text class="empty-text">暂无导师</text>
+  </view>
+</view>

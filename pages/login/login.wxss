@@ -1,0 +1,104 @@
+/* 登录页样式 */
+.login-header {
+  text-align: center;
+  padding: 120rpx 0 80rpx;
+}
+
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 32rpx;
+  margin-bottom: 32rpx;
+}
+
+.app-name {
+  font-size: 48rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 16rpx;
+  color: #1890ff;
+}
+
+.slogan {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+}
+
+.login-form {
+  padding: 40rpx;
+}
+
+.input-group {
+  margin-bottom: 40rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  height: 88rpx;
+  background: white;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
+  border: 2rpx solid #e8e8e8;
+  box-sizing: border-box;
+}
+
+.code-input-wrap {
+  display: flex;
+  gap: 16rpx;
+}
+
+.code-input {
+  flex: 1;
+}
+
+.code-btn {
+  width: 200rpx;
+  height: 88rpx;
+  background: white;
+  border: 2rpx solid #1890ff;
+  border-radius: 12rpx;
+  color: #1890ff;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.code-btn[disabled] {
+  border-color: #d9d9d9;
+  color: #999;
+}
+
+.login-btn {
+  width: 100%;
+  height: 88rpx;
+  background: #1890ff;
+  color: white;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-top: 40rpx;
+  border: none;
+}
+
+.tips {
+  text-align: center;
+  margin-top: 40rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.tips .link {
+  color: #1890ff;
+}

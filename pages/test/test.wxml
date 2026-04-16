@@ -1,0 +1,102 @@
+<!-- 测试页 -->
+<view class="container">
+  <!-- 未测试状态 -->
+  <view class="test-intro" wx:if="{{!currentTest}}">
+    <image class="test-icon" src="/images/test-large.png" />
+    <text class="title">AI能力测试</text>
+    <text class="desc">通过AI评估，准确了解你的真实水平</text>
+
+    <view class="feature-list">
+      <view class="feature-item">
+        <text class="feature-icon">✓</text>
+        <text class="feature-text">10道精选题目</text>
+      </view>
+      <view class="feature-item">
+        <text class="feature-icon">✓</text>
+        <text class="feature-text">5个维度评估</text>
+      </view>
+      <view class="feature-item">
+        <text class="feature-icon">✓</text>
+        <text class="feature-text">AI智能分析</text>
+      </view>
+    </view>
+
+    <button class="btn btn-primary start-btn" bindtap="startTest">开始测试</button>
+
+    <!-- 测试历史 -->
+    <view class="history-section" wx:if="{{testHistory.length > 0}}">
+      <text class="section-title">测试历史</text>
+      <view class="history-list">
+        <view 
+          class="history-item" 
+          wx:for="{{testHistory}}" 
+          wx:key="id"
+          bindtap="viewResult"
+          data-id="{{item.id}}"
+        >
+          <view class="history-info">
+            <text class="history-level">Lv.{{item.level}}</text>
+            <text class="history-date">{{item.date}}</text>
+          </view>
+          <text class="history-score">{{item.score}}分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 测试中状态 -->
+  <view class="test-ongoing" wx:if="{{currentTest && !testResult}}">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{(currentIndex + 1) / questions.length * 100}}%"></view>
+    </view>
+    <text class="progress-text">{{currentIndex + 1}}/{{questions.length}}</text>
+
+    <view class="question-card">
+      <text class="question-text">{{currentQuestion.text}}</text>
+
+      <view class="options-list">
+        <view 
+          class="option-item {{selectedOption === item.value ? 'selected' : ''}}"
+          wx:for="{{currentQuestion.options}}"
+          wx:key="value"
+          bindtap="selectOption"
+          data-value="{{item.value}}"
+        >
+          <text class="option-label">{{item.label}}</text>
+          <text class="option-content">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="action-bar">
+      <button class="btn btn-secondary" bindtap="prevQuestion" wx:if="{{currentIndex > 0}}">上一题</button>
+      <button class="btn btn-primary" bindtap="nextQuestion" disabled="{{!selectedOption}}">
+        {{currentIndex === questions.length - 1 ? '提交' : '下一题'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 测试结果 -->
+  <view class="test-result" wx:if="{{testResult}}">
+    <image class="result-icon" src="/images/result.png" />
+    <text class="result-title">测试完成</text>
+    <text class="result-level">你的等级：Lv.{{testResult.level}}</text>
+    <text class="result-score">得分：{{testResult.score}}/100</text>
+
+    <view class="result-analysis">
+      <text class="analysis-title">能力分析</text>
+      <view class="analysis-item" wx:for="{{testResult.analysis}}" wx:key="name">
+        <text class="analysis-name">{{item.name}}</text>
+        <view class="analysis-bar">
+          <view class="analysis-fill" style="width: {{item.score}}%"></view>
+        </view>
+        <text class="analysis-score">{{item.score}}分</text>
+      </view>
+    </view>
+
+    <view class="result-actions">
+      <button class="btn btn-primary" bindtap="backToHome">返回首页</button>
+      <button class="btn btn-secondary" bindtap="goToMatch">去匹配</button>
+    </view>
+  </view>
+</view>
