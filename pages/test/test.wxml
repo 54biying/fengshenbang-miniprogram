@@ -110,8 +110,8 @@
     </view>
 
     <view class="result-actions">
-      <button class="btn btn-secondary" bindtap="backToList">查看历史</button>
-      <button class="btn btn-primary" bindtap="retest">再次测试</button>
+      <button class="btn btn-secondary" bindtap="retest">再次测试</button>
+      <button class="btn btn-primary" bindtap="goToMatch">去找匹配</button>
     </view>
   </view>
 </view>

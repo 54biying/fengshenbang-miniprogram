@@ -244,6 +244,13 @@ Page({
     this.setData({ testStatus: 'idle' })
   },
 
+  // 去找匹配
+  goToMatch() {
+    wx.switchTab({
+      url: '/pages/match/match'
+    })
+  },
+
   // 重新测试
   retest() {
     this.setData({

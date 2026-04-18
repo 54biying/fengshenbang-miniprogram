@@ -1,119 +1,51 @@
-<!--pages/match/match.wxml-->
+<!-- 匹配页 -->
 <view class="container">
-  <!-- 我的状态卡片 -->
-  <view class="my-status-card">
-    <view class="status-left">
-      <view class="my-level-badge {{hasTested ? 'tested' : ''}}">
-        <text class="level-icon">🏆</text>
-        <text class="level-text">{{hasTested ? myLevelName : '未测试'}}</text>
-      </view>
-      <view class="my-info">
-        <text class="my-label">我的等级</text>
-        <text class="my-desc">{{hasTested ? '已获得匹配资格' : '完成测试解锁匹配'}}</text>
-      </view>
-    </view>
-    <view class="status-actions">
-      <button class="btn-sm {{hasTested ? 'btn-secondary' : 'btn-primary'}}" bindtap="goToTest">
-        {{hasTested ? '重新测试' : '去测试'}}
-      </button>
-    </view>
-  </view>
-
   <!-- 推荐匹配 -->
   <view class="section">
-    <view class="section-header">
-      <text class="section-title">🌟 推荐匹配</text>
-      <text class="section-count" wx:if="{{recommendations.length > 0}}">{{recommendations.length}}位</text>
-    </view>
-    
-    <!-- 有推荐 -->
-    <view class="match-list" wx:if="{{!showEmpty && recommendations.length > 0}}">
+    <text class="section-title">推荐匹配</text>
+    <view class="match-list" wx:if="{{recommendations.length > 0}}">
       <view 
         class="match-item" 
         wx:for="{{recommendations}}" 
         wx:key="id"
+        bindtap="viewUserProfile"
+        data-user="{{item}}"
       >
-        <view class="match-main" bindtap="viewUserProfile" data-user="{{item}}">
-          <image class="user-avatar" src="{{item.avatar}}" mode="aspectFill"/>
-          <view class="user-info">
-            <view class="user-header">
-              <text class="user-name">{{item.name}}</text>
-              <view class="level-tag level-{{item.level}}">
-                <text>{{item.levelName}}</text>
-              </view>
-            </view>
-            <text class="user-tags">{{item.tags}}</text>
-            <view class="match-info">
-              <view class="match-bar">
-                <view class="match-fill" style="width: {{item.matchDegree}}%"></view>
-              </view>
-              <text class="match-percent">{{item.matchDegree}}%匹配</text>
-            </view>
+        <image class="user-avatar" src="{{item.avatar || '/images/default-avatar.png'}}" />
+        <view class="user-info">
+          <view class="flex-between">
+            <text class="user-name">{{item.name}}</text>
+            <text class="user-level">Lv.{{item.level}}</text>
           </view>
+          <text class="user-tags">{{item.tags}}</text>
+          <text class="match-degree">匹配度：{{item.matchDegree}}%</text>
         </view>
-        <button class="btn-match" bindtap="sendRequest" data-user="{{item}}">
-          <text class="btn-icon">+</text>
-          <text>匹配</text>
+        <button class="btn btn-primary small-btn" bindtap="sendRequest" data-userid="{{item.id}}">
+          请求
         </button>
       </view>
     </view>
-    
-    <!-- 无推荐 -->
-    <view class="empty-state" wx:if="{{showEmpty}}">
-      <view class="empty-icon-box">
-        <text class="empty-icon">{{hasTested ? '🤝' : '📋'}}</text>
-      </view>
-      <text class="empty-title">{{hasTested ? '暂无推荐' : '需要先测试'}}</text>
-      <text class="empty-text">{{emptyReason || '完成能力测试后，系统会为你推荐合适的学习伙伴'}}</text>
-      
-      <view class="empty-actions">
-        <button class="btn btn-primary" bindtap="goToTest">
-          {{hasTested ? '刷新推荐' : '先去测试'}}
-        </button>
-        <button class="btn btn-secondary" bindtap="goToCheckin">
-          去打卡
-        </button>
-      </view>
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/empty.png" />
+      <text class="empty-text">暂无推荐，先去测试吧</text>
+      <button class="btn btn-primary" bindtap="goToTest">去测试</button>
     </view>
   </view>
 
   <!-- 匹配请求 -->
   <view class="section" wx:if="{{requests.length > 0}}">
-    <text class="section-title">📨 匹配请求</text>
+    <text class="section-title">匹配请求</text>
     <view class="request-list">
       <view class="request-item" wx:for="{{requests}}" wx:key="id">
-        <image class="request-avatar" src="{{item.fromUser.avatar || '/images/default-avatar.png'}}" mode="aspectFill"/>
+        <image class="request-avatar" src="{{item.fromUser.avatar || '/images/default-avatar.png'}}" />
         <view class="request-info">
           <text class="request-name">{{item.fromUser.name}}</text>
-          <text class="request-time">{{item.time || '刚刚'}}</text>
+          <text class="request-time">{{item.time}}</text>
         </view>
         <view class="request-actions">
-          <button class="btn-xs btn-secondary" bindtap="rejectRequest" data-id="{{item.id}}">拒绝</button>
-          <button class="btn-xs btn-primary" bindtap="acceptRequest" data-id="{{item.id}}">接受</button>
+          <button class="btn btn-secondary mini-btn" bindtap="rejectRequest" data-id="{{item.id}}">拒绝</button>
+          <button class="btn btn-primary mini-btn" bindtap="acceptRequest" data-id="{{item.id}}">接受</button>
         </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 匹配说明 -->
-  <view class="info-section">
-    <text class="info-title">💡 匹配说明</text>
-    <view class="info-list">
-      <view class="info-item">
-        <text class="info-num">1</text>
-        <text class="info-text">完成AI能力测试获取你的等级</text>
-      </view>
-      <view class="info-item">
-        <text class="info-num">2</text>
-        <text class="info-text">系统根据等级为你推荐学习伙伴</text>
-      </view>
-      <view class="info-item">
-        <text class="info-num">3</text>
-        <text class="info-text">发送匹配请求，等待对方接受</text>
-      </view>
-      <view class="info-item">
-        <text class="info-num">4</text>
-        <text class="info-text">匹配成功后开始学习交流</text>
       </view>
     </view>
   </view>

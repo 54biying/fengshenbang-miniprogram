@@ -40,6 +40,12 @@
         "selectedIconPath": "images/match-active.png"
       },
       {
+        "pagePath": "pages/checkin/checkin",
+        "text": "打卡",
+        "iconPath": "images/checkin.png",
+        "selectedIconPath": "images/checkin-active.png"
+      },
+      {
         "pagePath": "pages/profile/profile",
         "text": "我的",
         "iconPath": "images/profile.png",
