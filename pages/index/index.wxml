@@ -1,126 +1,86 @@
-<!-- 首页 -->
+<!-- 首页 - 简化版 -->
 <view class="container">
-  <!-- 用户信息卡片 -->
-  <view class="user-card" wx:if="{{userInfo}}">
-    <view class="user-info">
-      <view class="avatar-wrapper">
-        <image class="avatar" src="{{userInfo.avatar || '/images/default-avatar.png'}}" />
-      </view>
-      <view class="user-detail">
-        <text class="user-name">{{userInfo.name || '用户'}}</text>
-        <view class="level-info">
-          <text class="level-badge">Lv.{{userLevel || 0}}</text>
-          <text class="level-text">学习等级</text>
-        </view>
+  <!-- 顶部用户信息 -->
+  <view class="header">
+    <view class="user-info" bindtap="goToProfile">
+      <image class="avatar" src="{{userInfo.avatar || '/images/default-avatar.png'}}" />
+      <view class="user-meta">
+        <text class="user-name">{{userInfo.name || '访客'}}</text>
+        <text class="user-level" wx:if="{{userInfo}}">Lv.{{userLevel || 0}} 学习者</text>
+        <text class="user-level" wx:else>点击登录</text>
       </view>
     </view>
-    <view class="points-info" bindtap="goToPoints">
+    <view class="points-box" bindtap="goToPoints" wx:if="{{userInfo}}">
       <text class="points-num">{{userPoints || 0}}</text>
-      <text class="points-label">我的积分</text>
+      <text class="points-label">积分</text>
+    </view>
+  </view>
+
+  <!-- 今日打卡快捷入口 -->
+  <view class="quick-checkin" bindtap="goToCheckin" wx:if="{{userInfo}}">
+    <view class="checkin-left">
+      <text class="checkin-title">📅 今日打卡</text>
+      <text class="checkin-status {{todayCheckedIn ? 'done' : ''}}">
+        {{todayCheckedIn ? '已完成 ✓' : '还未打卡'}}
+      </text>
+    </view>
+    <view class="checkin-right">
+      <view class="streak-info">
+        <text class="streak-num">{{checkinStats.currentStreak || 0}}</text>
+        <text class="streak-label">连续天数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 核心功能入口 -->
+  <view class="main-features">
+    <view class="feature-row">
+      <view class="feature-big" bindtap="goToTest">
+        <text class="feature-icon-big">📝</text>
+        <text class="feature-name-big">AI能力测试</text>
+        <text class="feature-desc-big">10题测出真实水平</text>
+      </view>
+      <view class="feature-big" bindtap="goToMatch">
+        <text class="feature-icon-big">🤝</text>
+        <text class="feature-name-big">找学习伙伴</text>
+        <text class="feature-desc-big">匹配同水平同学</text>
+      </view>
+    </view>
+    <view class="feature-row">
+      <view class="feature-big" bindtap="goToCheckin">
+        <text class="feature-icon-big">📅</text>
+        <text class="feature-name-big">每日打卡</text>
+        <text class="feature-desc-big">记录学习轨迹</text>
+      </view>
+      <view class="feature-big" bindtap="goToMentor">
+        <text class="feature-icon-big">🎓</text>
+        <text class="feature-name-big">拜师学艺</text>
+        <text class="feature-desc-big">向高手请教</text>
+      </view>
     </view>
   </view>
 
   <!-- 未登录提示 -->
-  <view class="login-card" wx:if="{{!userInfo}}">
-    <text class="login-text">登录后体验完整功能</text>
-    <button class="btn btn-primary" bindtap="goToLogin">立即登录</button>
+  <view class="login-tip" wx:if="{{!userInfo}}">
+    <text class="tip-text">登录后解锁全部功能</text>
+    <button class="btn-login" bindtap="goToLogin">立即登录</button>
   </view>
 
-  <!-- 每日打卡区域 -->
-  <view class="checkin-card" wx:if="{{userInfo}}">
-    <view class="card-header">
-      <text class="card-title">📅 每日打卡</text>
-      <text class="checkin-hint">{{todayCheckedIn ? '今日已打卡 ✓' : '点击下方按钮打卡'}}</text>
-    </view>
-    
-    <!-- 周打卡进度 -->
-    <view class="week-progress">
-      <view class="week-day {{weekStatus[index] ? 'checked' : ''}}" wx:for="{{['日','一','二','三','四','五','六']}}" wx:key="index">
-        <text class="day-text">{{item}}</text>
-        <view class="day-dot {{weekStatus[index] ? 'active' : ''}}"></view>
+  <!-- 学习数据概览 -->
+  <view class="stats-section" wx:if="{{userInfo}}">
+    <text class="section-title">学习数据</text>
+    <view class="stats-grid">
+      <view class="stat-box">
+        <text class="stat-num">{{stats.testCount || 0}}</text>
+        <text class="stat-label">测试次数</text>
       </view>
-    </view>
-
-    <!-- 打卡按钮 -->
-    <button class="btn {{todayCheckedIn ? 'btn-disabled' : 'btn-primary'}} checkin-btn" bindtap="doCheckin" disabled="{{todayCheckedIn}}">
-      {{todayCheckedIn ? '已打卡' : '立即打卡'}}
-    </button>
-
-    <!-- 打卡统计 -->
-    <view class="checkin-stats" wx:if="{{checkinStats}}">
-      <view class="stat-item-inline">
-        <text class="stat-value">{{checkinStats.totalCheckIns || 0}}</text>
-        <text class="stat-desc">累计打卡</text>
+      <view class="stat-box">
+        <text class="stat-num">{{stats.matchCount || 0}}</text>
+        <text class="stat-label">匹配伙伴</text>
       </view>
-      <view class="stat-divider"></view>
-      <view class="stat-item-inline">
-        <text class="stat-value">{{checkinStats.currentStreak || 0}}</text>
-        <text class="stat-desc">连续天数</text>
-      </view>
-      <view class="stat-divider"></view>
-      <view class="stat-item-inline">
-        <text class="stat-value">{{checkinStats.longestStreak || 0}}</text>
-        <text class="stat-desc">最长连续</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 今日任务区域 -->
-  <view class="task-card" wx:if="{{userInfo && tasks.length > 0}}">
-    <view class="card-header">
-      <text class="card-title">📋 今日任务</text>
-    </view>
-    <view class="task-list">
-      <view class="task-item {{item.status === 'completed' ? 'completed' : ''}}" wx:for="{{tasks}}" wx:key="id">
-        <view class="task-check">
-          <text wx:if="{{item.status === 'completed'}}">✓</text>
-        </view>
-        <view class="task-info">
-          <text class="task-title">{{item.title}}</text>
-          <text class="task-desc">{{item.description}}</text>
-        </view>
-        <view class="task-reward">
-          <text class="reward-num">+{{item.pointsReward}}</text>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 功能入口 -->
-  <view class="feature-card">
-    <text class="section-title">探索功能</text>
-    
-    <view class="feature-grid">
-      <view class="feature-item" bindtap="goToTest">
-        <view class="feature-icon-wrapper test">
-          <text class="feature-icon">📝</text>
-        </view>
-        <text class="feature-name">AI测试</text>
-        <text class="feature-desc">测测你的水平</text>
-      </view>
-
-      <view class="feature-item" bindtap="goToMatch">
-        <view class="feature-icon-wrapper match">
-          <text class="feature-icon">🤝</text>
-        </view>
-        <text class="feature-name">学习匹配</text>
-        <text class="feature-desc">找学习伙伴</text>
-      </view>
-
-      <view class="feature-item" bindtap="goToMentor">
-        <view class="feature-icon-wrapper mentor">
-          <text class="feature-icon">🎓</text>
-        </view>
-        <text class="feature-name">拜师学艺</text>
-        <text class="feature-desc">向高手请教</text>
-      </view>
-
-      <view class="feature-item" bindtap="goToPoints">
-        <view class="feature-icon-wrapper points">
-          <text class="feature-icon">💰</text>
-        </view>
-        <text class="feature-name">积分中心</text>
-        <text class="feature-desc">查看积分明细</text>
+      <view class="stat-box">
+        <text class="stat-num">{{checkinStats.totalCheckIns || 0}}</text>
+        <text class="stat-label">累计打卡</text>
       </view>
     </view>
   </view>
