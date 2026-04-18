@@ -23,23 +23,27 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
       },
       {
         "pagePath": "pages/test/test",
-        "text": "测试"
-      },
-      {
-        "pagePath": "pages/checkin/checkin",
-        "text": "打卡"
+        "text": "测试",
+        "iconPath": "images/test.png",
+        "selectedIconPath": "images/test-active.png"
       },
       {
         "pagePath": "pages/match/match",
-        "text": "匹配"
+        "text": "匹配",
+        "iconPath": "images/match.png",
+        "selectedIconPath": "images/match-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile-active.png"
       }
     ]
   },

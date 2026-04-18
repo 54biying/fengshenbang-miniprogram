@@ -1,8 +1,10 @@
 <!-- 测试页 -->
 <view class="container">
-  <!-- 未测试状态 -->
-  <view class="test-intro" wx:if="{{!currentTest}}">
-    <image class="test-icon" src="/images/test-large.png" />
+  <!-- 空闲状态：测试介绍 -->
+  <view class="test-intro" wx:if="{{testStatus === 'idle'}}">
+    <view class="test-icon-wrapper">
+      <text class="test-icon-text">📝</text>
+    </view>
     <text class="title">AI能力测试</text>
     <text class="desc">通过AI评估，准确了解你的真实水平</text>
 
@@ -27,16 +29,10 @@
     <view class="history-section" wx:if="{{testHistory.length > 0}}">
       <text class="section-title">测试历史</text>
       <view class="history-list">
-        <view 
-          class="history-item" 
-          wx:for="{{testHistory}}" 
-          wx:key="id"
-          bindtap="viewResult"
-          data-id="{{item.id}}"
-        >
+        <view class="history-item" wx:for="{{testHistory}}" wx:key="id">
           <view class="history-info">
-            <text class="history-level">Lv.{{item.level}}</text>
-            <text class="history-date">{{item.date}}</text>
+            <text class="history-level">等级 {{item.level}}</text>
+            <text class="history-date">{{item.completedAt}}</text>
           </view>
           <text class="history-score">{{item.score}}分</text>
         </view>
@@ -45,89 +41,77 @@
   </view>
 
   <!-- 测试中状态 -->
-  <view class="test-ongoing" wx:if="{{currentTest && !testResult}}">
-    <view class="progress-bar">
-      <view class="progress-fill" style="width: {{(currentIndex + 1) / questions.length * 100}}%"></view>
+  <view class="test-ongoing" wx:if="{{testStatus === 'testing'}}">
+    <!-- 进度条 -->
+    <view class="progress-header">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{(currentIndex + 1) / questions.length * 100}}%"></view>
+      </view>
+      <text class="progress-text">{{currentIndex + 1}} / {{questions.length}}</text>
     </view>
-    <text class="progress-text">{{currentIndex + 1}}/{{questions.length}}</text>
 
+    <!-- 题目卡片 -->
     <view class="question-card">
-      <text class="question-text">{{currentQuestion.text}}</text>
+      <text class="question-category">{{currentQuestion.category}}</text>
+      <text class="question-text">{{currentQuestion.question}}</text>
 
       <view class="options-list">
         <view 
-          class="option-item {{selectedOption === item.value ? 'selected' : ''}}"
+          class="option-item {{selectedOption === index ? 'selected' : ''}}"
           wx:for="{{currentQuestion.options}}"
-          wx:key="value"
+          wx:key="index"
           bindtap="selectOption"
-          data-value="{{item.value}}"
+          data-index="{{index}}"
         >
-          <text class="option-label">{{item.label}}</text>
-          <text class="option-content">{{item.content}}</text>
+          <view class="option-radio">
+            <view class="radio-inner" wx:if="{{selectedOption === index}}"></view>
+          </view>
+          <text class="option-text">{{item}}</text>
         </view>
       </view>
     </view>
 
+    <!-- 操作按钮 -->
     <view class="action-bar">
       <button class="btn btn-secondary" bindtap="prevQuestion" wx:if="{{currentIndex > 0}}">上一题</button>
-      <button class="btn btn-primary" bindtap="nextQuestion" disabled="{{!selectedOption}}">
-        {{currentIndex === questions.length - 1 ? '提交' : '下一题'}}
+      <button class="btn btn-primary btn-next" bindtap="nextQuestion" wx:if="{{selectedOption !== null}}">
+        {{currentIndex === questions.length - 1 ? '提交答案' : '下一题'}}
+      </button>
+      <button class="btn btn-disabled" wx:if="{{selectedOption === null}}">
+        {{currentIndex === questions.length - 1 ? '请选择答案' : '请选择答案'}}
       </button>
     </view>
   </view>
 
   <!-- 测试结果 -->
-  <view class="test-result" wx:if="{{testResult}}">
-    <view class="result-icon {{testResult.level >= 4 ? 'expert' : ''}}">
-      <text class="level-badge">{{testResult.levelName}}</text>
+  <view class="test-result" wx:if="{{testStatus === 'result'}}">
+    <view class="result-header">
+      <text class="result-icon">🎉</text>
+      <text class="result-title">测试完成</text>
     </view>
-    <text class="result-title">测试完成</text>
-    <text class="result-score">得分：{{testResult.score}}/100</text>
 
-    <!-- 维度分析 -->
-    <view class="result-analysis">
-      <text class="analysis-title">五维能力分析</text>
-      <view class="analysis-item" wx:for="{{testResult.analysis}}" wx:key="name">
-        <text class="analysis-name">{{item.name}}</text>
-        <view class="analysis-bar">
-          <view class="analysis-fill {{item.score >= 40 ? 'high' : item.score >= 20 ? 'medium' : 'low'}}" style="width: {{item.score}}%"></view>
+    <view class="result-card">
+      <text class="result-level">你的等级：{{testResult.level}}</text>
+      <text class="result-score">综合得分：{{testResult.score}}分</text>
+    </view>
+
+    <view class="result-dimensions" wx:if="{{testResult.dimensions}}">
+      <text class="dimensions-title">能力分析</text>
+      <view class="dimension-item" wx:for="{{testResult.dimensions}}" wx:key="index">
+        <view class="dimension-info">
+          <text class="dimension-name">{{item}}</text>
         </view>
-        <text class="analysis-score">{{item.score}}分</text>
       </view>
     </view>
 
-    <!-- 学习建议 -->
-    <view class="suggestions-section" wx:if="{{testResult.suggestions.length > 0}}">
-      <text class="suggestions-title">💡 学习建议</text>
-      <view class="suggestion-item" wx:for="{{testResult.suggestions}}" wx:key="index">
-        <text class="suggestion-dot">•</text>
-        <text class="suggestion-text">{{item}}</text>
-      </view>
-    </view>
-
-    <!-- 题目回顾 -->
-    <view class="review-section">
-      <text class="review-title">📖 题目回顾</text>
-      <view class="review-item" wx:for="{{questions}}" wx:key="id">
-        <view class="review-question">
-          <text class="review-num">{{index + 1}}.</text>
-          <text class="review-text">{{item.text}}</text>
-        </view>
-        <view class="review-answer">
-          <text class="your-answer {{answers[index] === item.correctAnswer ? 'correct' : 'wrong'}}">
-            你的答案：{{answers[index] || '未答'}}
-          </text>
-          <text class="correct-answer">正确答案：{{item.correctAnswer}}</text>
-        </view>
-        <view class="review-explanation" wx:if="{{item.explanation}}">
-          <text class="explanation-text">{{item.explanation}}</text>
-        </view>
-      </view>
+    <view class="result-recommendation" wx:if="{{testResult.recommendations}}">
+      <text class="recommendation-title">学习建议</text>
+      <text class="recommendation-text">{{testResult.recommendations}}</text>
     </view>
 
     <view class="result-actions">
-      <button class="btn btn-secondary" bindtap="retest">重新测试</button>
-      <button class="btn btn-primary" bindtap="goToMatch">去匹配</button>
+      <button class="btn btn-secondary" bindtap="backToList">查看历史</button>
+      <button class="btn btn-primary" bindtap="retest">再次测试</button>
     </view>
   </view>
 </view>
