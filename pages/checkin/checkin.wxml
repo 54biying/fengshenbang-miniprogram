@@ -18,31 +18,56 @@
 
   <!-- 本周打卡日历 -->
   <view class="calendar-section">
-    <text class="section-title">本周打卡</text>
+    <text class="section-title">📅 本周打卡</text>
     <view class="week-calendar">
       <view class="day-item" wx:for="{{weekStatus}}" wx:key="index">
         <view class="day-circle {{item ? 'checked' : ''}}">
           <text wx:if="{{item}}">✓</text>
+          <text wx:else>{{['日','一','二','三','四','五','六'][index]}}</text>
         </view>
-        <text class="day-name">周{{['日','一','二','三','四','五','六'][index]}}</text>
       </view>
     </view>
   </view>
 
   <!-- 今日打卡区域 -->
   <view class="checkin-section" wx:if="{{!todayCheckedIn}}">
-    <text class="section-title">今日打卡</text>
+    <text class="section-title">✨ 今日打卡</text>
     
     <!-- 学习时长 -->
     <view class="form-item">
-      <text class="label">学习时长</text>
-      <slider min="0" max="180" step="10" value="{{studyTime}}" show-value bindchange="onStudyTimeChange"/>
-      <text class="hint">{{studyTime}} 分钟</text>
+      <text class="label">📊 学习时长</text>
+      <view class="time-display">
+        <text class="time-num">{{studyTime}}</text>
+        <text class="time-unit">分钟</text>
+      </view>
+      <slider min="15" max="180" step="15" value="{{studyTime}}" show-value bindchange="onStudyTimeChange" activeColor="#1890ff"/>
+      <view class="time-hints">
+        <text class="time-hint">15分钟</text>
+        <text class="time-hint">3小时</text>
+      </view>
+    </view>
+
+    <!-- 学习任务选择 -->
+    <view class="form-item">
+      <text class="label">✅ 今日学习任务（可选）</text>
+      <view class="task-grid">
+        <view 
+          class="task-item {{selectedTasks.indexOf(item.id) > -1 ? 'selected' : ''}}" 
+          wx:for="{{availableTasks}}" 
+          wx:key="id"
+          bindtap="toggleTask"
+          data-id="{{item.id}}"
+        >
+          <text class="task-icon">{{item.icon}}</text>
+          <text class="task-name">{{item.name}}</text>
+          <text class="task-points">+{{item.points}}</text>
+        </view>
+      </view>
     </view>
 
     <!-- 心情选择 -->
     <view class="form-item">
-      <text class="label">今日心情</text>
+      <text class="label">😊 今日心情</text>
       <view class="mood-selector">
         <view class="mood-item {{mood === 'happy' ? 'selected' : ''}}" data-mood="happy" bindtap="selectMood">
           <text class="mood-emoji">😊</text>
@@ -65,13 +90,13 @@
 
     <!-- 学习笔记 -->
     <view class="form-item">
-      <text class="label">学习笔记（选填）</text>
+      <text class="label">📝 学习笔记（选填）</text>
       <textarea class="notes-input" placeholder="记录今天的学习内容或心得..." value="{{notes}}" bindinput="onNotesInput" maxlength="200"/>
-      <text class="hint">{{notes.length}}/200</text>
+      <text class="hint">{{notes.length || 0}}/200</text>
     </view>
 
     <!-- 打卡按钮 -->
-    <button class="checkin-btn" bindtap="submitCheckin">立即打卡</button>
+    <button class="checkin-btn" bindtap="submitCheckin">🎯 立即打卡</button>
   </view>
 
   <!-- 已打卡状态 -->
@@ -79,30 +104,5 @@
     <view class="success-icon">✓</view>
     <text class="success-text">今日已打卡</text>
     <text class="success-sub">明天再来继续加油！</text>
-  </view>
-
-  <!-- 打卡规则 -->
-  <view class="rules-section">
-    <text class="section-title">打卡规则</text>
-    <view class="rule-item">
-      <text class="rule-dot">•</text>
-      <text class="rule-text">每日打卡 +10 积分</text>
-    </view>
-    <view class="rule-item">
-      <text class="rule-dot">•</text>
-      <text class="rule-text">连续3天 +20 积分</text>
-    </view>
-    <view class="rule-item">
-      <text class="rule-dot">•</text>
-      <text class="rule-text">连续7天 +50 积分</text>
-    </view>
-    <view class="rule-item">
-      <text class="rule-dot">•</text>
-      <text class="rule-text">学习30分钟 +10 积分</text>
-    </view>
-    <view class="rule-item">
-      <text class="rule-dot">•</text>
-      <text class="rule-text">学习60分钟 +20 积分</text>
-    </view>
   </view>
 </view>
